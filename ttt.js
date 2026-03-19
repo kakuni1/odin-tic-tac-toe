@@ -5,30 +5,22 @@ let tttBoard = {
     .map(() => Array(3).fill("")),
 
   playerData: [
-    { name: "playerA", symbol: "" },
-    { name: "playerB", symbol: "" },
+    { name: "playerA", symbol: "", firstMove: false },
+    { name: "playerB", symbol: "", firstMove: false },
   ],
 };
 
 const tttLogic = (function logicController() {
-  const getPlayerSymbol = function (playerName) {
-    const player = tttBoard.playerData.find((p) => p.name === playerName);
-    return prompt(`${player.name}:`);
-  };
-
-  const setPlayerSymbol = function (playerName) {
-    const player = tttBoard.playerData.find((p) => p.name === playerName);
-    return (player.symbol = getPlayerSymbol(playerName));
-  };
-
-  const setInitialPlayerState = function () {
-    tttBoard.playerData[0].symbol = setPlayerSymbol(tttBoard.playerData[0].name);
-    tttBoard.playerData[1].symbol = setPlayerSymbol(tttBoard.playerData[1].name);
+  // randomly pick first player, first player symbol: x, second: o
+  const setInitialPlayerState = function (playerOne, playerTwo) {
+    if ((coinFlip = Math.random() > 0.5)) playerPick = playerOne;
+    else playerPick = playerTwo;
+    tttBoard.playerData.find((p) => p.name === playerPick).firstMove = true;
+    tttBoard.playerData.find((p) => p.name === playerPick).symbol = "x";
+    tttBoard.playerData.find((p) => p.symbol === "").symbol = "o";
   };
 
   return {
-    getPlayerSymbol: getPlayerSymbol,
-    setPlayerSymbol: setPlayerSymbol,
     setInitialPlayerState: setInitialPlayerState,
   };
 })();
@@ -43,6 +35,6 @@ const tttDisplay = (function displayController() {
 })();
 
 (function tttMain() {
-  tttLogic.setInitialPlayerState();
+  tttLogic.setInitialPlayerState(tttBoard.playerData[0].name, tttBoard.playerData[1].name);
   tttDisplay.printConsole();
 })();
