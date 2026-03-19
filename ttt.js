@@ -10,6 +10,8 @@ let tttBoard = {
   ],
 };
 
+const prompt = require("prompt-sync")();
+
 const tttLogic = (function logicController() {
   // randomly pick first player, first player symbol: x, second: o
   const setInitialPlayerState = function (playerOne, playerTwo) {
@@ -18,6 +20,9 @@ const tttLogic = (function logicController() {
     tttBoard.playerData.find((p) => p.name === playerPick).firstMove = true;
     tttBoard.playerData.find((p) => p.name === playerPick).symbol = "x";
     tttBoard.playerData.find((p) => p.symbol === "").symbol = "o";
+
+    const input = prompt("testing input:");
+    console.log(`input: ${input}`);
   };
 
   return {
