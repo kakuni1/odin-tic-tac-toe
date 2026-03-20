@@ -39,7 +39,7 @@ const prompt = require("prompt-sync")();
   function oneMove(player, symbol) {
     // take (1) player's input
     const { row, col } = promptUser(player, symbol);
-    if (tttBoard.boardGrid[row][col] === "") tttBoard.boardGrid[row][col] = symbol;
+    tttBoard.boardGrid[row][col] = symbol;
   }
 
   function repeatMove(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
