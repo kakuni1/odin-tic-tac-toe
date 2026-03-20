@@ -42,7 +42,7 @@ const prompt = require("prompt-sync")();
     tttBoard.boardGrid[row][col] = symbol;
   }
 
-  function repeatMove(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
+  function runGame(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
     // loop game until exit condition is met
     while (true) {
       if (exitNow() === true) break;
@@ -83,5 +83,5 @@ const prompt = require("prompt-sync")();
 
   // run game (main)
   runInitialSetup();
-  repeatMove(firstPlayer, secondPlayer, firstSymbol, secondSymbol);
+  runGame(firstPlayer, secondPlayer, firstSymbol, secondSymbol);
 })();
