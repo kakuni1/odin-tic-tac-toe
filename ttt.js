@@ -10,6 +10,8 @@ let tttBoard = {
 const prompt = require("prompt-sync")();
 
 (function runLogic() {
+  let firstPlayer, secondPlayer, firstSymbol, secondSymbol;
+
   function runInitialSetup() {
     // randomly pick first player, first player symbol: x, second: o
     const coinFlip = Math.random();
@@ -27,8 +29,9 @@ const prompt = require("prompt-sync")();
       secondSymbol = "x";
     }
   }
-  function makeMove(player, symbol) {
-    // prompt for array position selection (row, col)
+
+  function oneMove(player, symbol) {
+    // take (1) player's input
     const inputRow = prompt(`${player} (${symbol}), choose array slot (row): `);
     const inputCol = prompt(`${player} (${symbol}), choose array slot (col): `);
     const row = parseInt(inputRow) - 1;
@@ -36,11 +39,30 @@ const prompt = require("prompt-sync")();
     tttBoard.boardGrid[row][col] = symbol;
   }
 
-  runInitialSetup();
-  makeMove(firstPlayer, firstSymbol);
-  makeMove(secondPlayer, secondSymbol);
-})();
+  function repeatMove(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
+    // loop game until exit condition is met
+    while (true) {
+      oneMove(firstPlayer, firstSymbol);
+      printConsole();
+      if (checkGameState() === false) {
+        break;
+      }
+      oneMove(secondPlayer, secondSymbol);
+      printConsole();
+    }
+  }
 
-(function printConsole() {
-  console.table(tttBoard.boardGrid);
+  function checkGameState() {
+    // check if game should end, return true if it should
+    const exitStatus = tttBoard.boardGrid.some((i) => i.includes(""));
+    return exitStatus;
+  }
+
+  function printConsole() {
+    console.table(tttBoard.boardGrid);
+  }
+
+  // run game (main)
+  runInitialSetup();
+  repeatMove(firstPlayer, secondPlayer, firstSymbol, secondSymbol);
 })();
