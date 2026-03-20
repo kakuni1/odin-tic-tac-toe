@@ -52,15 +52,26 @@ const prompt = require("prompt-sync")();
   }
 
   function exitNow() {
-    // check if game should end, return true if it should
-    if (tttBoard.boardGrid.some((i) => i.includes("")) === false) {
-      return true;
-    } else if (
-      (tttBoard.boardGrid[0][0] && tttBoard.boardGrid[0][1] && tttBoard.boardGrid[0][2] === "x") ||
-      (tttBoard.boardGrid[0][0] && tttBoard.boardGrid[0][1] && tttBoard.boardGrid[0][2] === "o")
-    ) {
-      return true;
-    }
+    const board = tttBoard.boardGrid;
+
+    // check for exit conditions, return true to exit
+
+    // board full
+    if (board.some((i) => i.includes("")) === false) return true;
+    // row check
+    if (board[0][0] !== "" && board[0][0] === board[0][1] && board[0][1] === board[0][2]) return true;
+    if (board[1][0] !== "" && board[1][0] === board[1][1] && board[1][1] === board[1][2]) return true;
+    if (board[2][0] !== "" && board[2][0] === board[2][1] && board[2][1] === board[2][2]) return true;
+    // column check
+    if (board[0][0] !== "" && board[0][0] === board[1][0] && board[1][0] === board[2][0]) return true;
+    if (board[0][1] !== "" && board[0][1] === board[1][1] && board[1][1] === board[2][1]) return true;
+    if (board[0][2] !== "" && board[0][2] === board[1][2] && board[1][2] === board[2][2]) return true;
+    // diagnol check
+    if (board[0][0] !== "" && board[0][0] === board[1][1] && board[1][1] === board[2][2]) return true;
+    if (board[0][2] !== "" && board[0][2] === board[1][1] && board[1][1] === board[2][0]) return true;
+
+    // if no exit condition, return false to resume
+    return false;
   }
 
   function printConsole() {
