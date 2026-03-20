@@ -30,13 +30,16 @@ const prompt = require("prompt-sync")();
     }
   }
 
-  function oneMove(player, symbol) {
-    // take (1) player's input
+  function promptUser(player, symbol) {
     const inputRow = prompt(`${player} (${symbol}), choose array slot (row): `);
     const inputCol = prompt(`${player} (${symbol}), choose array slot (col): `);
-    const row = parseInt(inputRow) - 1;
-    const col = parseInt(inputCol) - 1;
-    tttBoard.boardGrid[row][col] = symbol;
+    return { row: parseInt(inputRow) - 1, col: parseInt(inputCol) - 1 };
+  }
+
+  function oneMove(player, symbol) {
+    // take (1) player's input
+    const { row, col } = promptUser(player, symbol);
+    if (tttBoard.boardGrid[row][col] === "") tttBoard.boardGrid[row][col] = symbol;
   }
 
   function repeatMove(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
