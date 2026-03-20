@@ -56,6 +56,11 @@ const prompt = require("prompt-sync")();
     // check if game should end, return true if it should
     if (tttBoard.boardGrid.some((i) => i.includes("")) === false) {
       return true;
+    } else if (
+      (tttBoard.boardGrid[0][0] && tttBoard.boardGrid[0][1] && tttBoard.boardGrid[0][2] === "x") ||
+      (tttBoard.boardGrid[0][0] && tttBoard.boardGrid[0][1] && tttBoard.boardGrid[0][2] === "o")
+    ) {
+      return true;
     }
   }
 
