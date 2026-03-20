@@ -1,45 +1,40 @@
 let tttBoard = {
   // create empty "" 3x3 grid using arrays
   boardGrid: Array(3)
-    .fill()
+    .fill("")
     .map(() => Array(3).fill("")),
 
-  playerData: [
-    { name: "playerA", symbol: "", firstMove: false },
-    { name: "playerB", symbol: "", firstMove: false },
-  ],
+  playerData: [{ name: "playerA" }, { name: "playerB" }],
 };
 
 const prompt = require("prompt-sync")();
 
-const tttLogic = (function logicController() {
-  // randomly pick first player, first player symbol: x, second: o
-  const setInitialPlayerState = function (playerOne, playerTwo) {
-    if ((coinFlip = Math.random() > 0.5)) playerPick = playerOne;
-    else playerPick = playerTwo;
-    tttBoard.playerData.find((p) => p.name === playerPick).firstMove = true;
-    tttBoard.playerData.find((p) => p.name === playerPick).symbol = "x";
-    tttBoard.playerData.find((p) => p.symbol === "").symbol = "o";
+(function runLogic() {
+  function runInitialSetup() {
+    // randomly pick first player, first player symbol: x, second: o
+    const coinFlip = Math.random();
+    if (coinFlip > 0.5) {
+      // playerA, first
+      firstPlayer = "playerA";
+      playerSymbol = "x";
+    } else {
+      // playerB, first
+      firstPlayer = "playerB";
+      playerSymbol = "o";
+    }
+  }
+  function makeMove(player, symbol) {
+    const inputRow = prompt(`${player} (${symbol}), choose array slot (row): `);
+    const inputCol = prompt(`${player} (${symbol}), choose array slot (col): `);
+    const row = parseInt(inputRow) - 1;
+    const col = parseInt(inputCol) - 1;
+    tttBoard.boardGrid[row][col] = symbol;
+  }
 
-    const input = prompt("testing input:");
-    console.log(`input: ${input}`);
-  };
-
-  return {
-    setInitialPlayerState: setInitialPlayerState,
-  };
+  runInitialSetup();
+  makeMove(firstPlayer, playerSymbol);
 })();
 
-const tttDisplay = (function displayController() {
-  const printConsole = function () {
-    console.table(tttBoard.playerData);
-    console.table(tttBoard.boardGrid);
-  };
-
-  return { printConsole: printConsole };
-})();
-
-(function tttMain() {
-  tttLogic.setInitialPlayerState(tttBoard.playerData[0].name, tttBoard.playerData[1].name);
-  tttDisplay.printConsole();
+(function printConsole() {
+  console.table(tttBoard.boardGrid);
 })();
