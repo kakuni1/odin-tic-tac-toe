@@ -16,14 +16,19 @@ const prompt = require("prompt-sync")();
     if (coinFlip > 0.5) {
       // playerA, first
       firstPlayer = "playerA";
-      playerSymbol = "x";
+      secondPlayer = "playerB";
+      firstSymbol = "x";
+      secondSymbol = "o";
     } else {
       // playerB, first
       firstPlayer = "playerB";
-      playerSymbol = "o";
+      secondPlayer = "playerA";
+      firstSymbol = "o";
+      secondSymbol = "x";
     }
   }
   function makeMove(player, symbol) {
+    // prompt for array position selection (row, col)
     const inputRow = prompt(`${player} (${symbol}), choose array slot (row): `);
     const inputCol = prompt(`${player} (${symbol}), choose array slot (col): `);
     const row = parseInt(inputRow) - 1;
@@ -32,7 +37,8 @@ const prompt = require("prompt-sync")();
   }
 
   runInitialSetup();
-  makeMove(firstPlayer, playerSymbol);
+  makeMove(firstPlayer, firstSymbol);
+  makeMove(secondPlayer, secondSymbol);
 })();
 
 (function printConsole() {
