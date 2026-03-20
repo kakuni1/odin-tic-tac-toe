@@ -37,9 +37,16 @@ const prompt = require("prompt-sync")();
   }
 
   function oneMove(player, symbol) {
+    let validMove = false;
     // take (1) player's input
-    const { row, col } = promptUser(player, symbol);
-    tttBoard.boardGrid[row][col] = symbol;
+
+    while (!validMove) {
+      const { row, col } = promptUser(player, symbol);
+      if (tttBoard.boardGrid[row][col] === "") {
+        validMove = true;
+        tttBoard.boardGrid[row][col] = symbol;
+      }
+    }
   }
 
   function runGame(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
