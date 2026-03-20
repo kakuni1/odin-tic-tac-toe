@@ -42,11 +42,10 @@ const prompt = require("prompt-sync")();
   function repeatMove(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
     // loop game until exit condition is met
     while (true) {
+      if (exitNow() === true) break;
       oneMove(firstPlayer, firstSymbol);
       printConsole();
-      if (exitNow() === true) {
-        break;
-      }
+      if (exitNow() === true) break;
       oneMove(secondPlayer, secondSymbol);
       printConsole();
     }
