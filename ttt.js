@@ -44,7 +44,7 @@ const prompt = require("prompt-sync")();
     while (true) {
       oneMove(firstPlayer, firstSymbol);
       printConsole();
-      if (checkGameState() === false) {
+      if (exitNow() === true) {
         break;
       }
       oneMove(secondPlayer, secondSymbol);
@@ -52,10 +52,11 @@ const prompt = require("prompt-sync")();
     }
   }
 
-  function checkGameState() {
+  function exitNow() {
     // check if game should end, return true if it should
-    const exitStatus = tttBoard.boardGrid.some((i) => i.includes(""));
-    return exitStatus;
+    if (tttBoard.boardGrid.some((i) => i.includes("")) === false) {
+      return true;
+    }
   }
 
   function printConsole() {
