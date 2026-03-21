@@ -99,6 +99,14 @@ const prompt = require("prompt-sync")();
     return false;
   }
 
+  function nameChange() {
+    let whichName = prompt(`Select name -> [1] ${tttBoard.playerOne.name}, [2] ${tttBoard.playerTwo.name}:  `);
+    whichName = parseInt(whichName);
+    const inputName = prompt(`Enter name: `);
+    if (whichName === 1) tttBoard.playerOne.name = inputName;
+    if (whichName === 2) tttBoard.playerTwo.name = inputName;
+  }
+
   function printConsole() {
     console.table(tttBoard.boardGrid);
   }
