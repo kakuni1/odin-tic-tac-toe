@@ -4,7 +4,8 @@ let tttBoard = {
     .fill("")
     .map(() => Array(3).fill("")),
 
-  playerData: [{ name: "playerA" }, { name: "playerB" }],
+  playerOne: { name: "Player 1" },
+  playerTwo: { name: "Player 2" },
 };
 
 const prompt = require("prompt-sync")();
@@ -52,16 +53,30 @@ const prompt = require("prompt-sync")();
   function runGame(firstPlayer, secondPlayer, firstSymbol, secondSymbol) {
     // loop game until exit condition is met
     while (true) {
-      if (exitNow() === true) break;
+      if (exitNow("x") === true) {
+        console.log(`WINNER: ${tttBoard.playerOne.name}`);
+        break;
+      }
+      if (exitNow("o") === true) {
+        console.log(`WINNER: ${tttBoard.playerTwo.name}`);
+        break;
+      }
       oneMove(firstPlayer, firstSymbol);
       printConsole();
-      if (exitNow() === true) break;
+      if (exitNow("x") === true) {
+        console.log(`WINNER: ${tttBoard.playerOne.name}`);
+        break;
+      }
+      if (exitNow("o") === true) {
+        console.log(`WINNER: ${tttBoard.playerTwo.name}`);
+        break;
+      }
       oneMove(secondPlayer, secondSymbol);
       printConsole();
     }
   }
 
-  function exitNow() {
+  function exitNow(symbol) {
     const board = tttBoard.boardGrid;
 
     // check for exit conditions, return true to exit
@@ -69,16 +84,16 @@ const prompt = require("prompt-sync")();
     // board full
     if (board.some((i) => i.includes("")) === false) return true;
     // row check
-    if (board[0][0] !== "" && board[0][0] === board[0][1] && board[0][1] === board[0][2]) return true;
-    if (board[1][0] !== "" && board[1][0] === board[1][1] && board[1][1] === board[1][2]) return true;
-    if (board[2][0] !== "" && board[2][0] === board[2][1] && board[2][1] === board[2][2]) return true;
+    if (board[0][0] === symbol && board[0][1] === symbol && board[0][2] === symbol) return true;
+    if (board[1][0] === symbol && board[1][1] === symbol && board[1][2] === symbol) return true;
+    if (board[2][0] === symbol && board[2][1] === symbol && board[2][2] === symbol) return true;
     // column check
-    if (board[0][0] !== "" && board[0][0] === board[1][0] && board[1][0] === board[2][0]) return true;
-    if (board[0][1] !== "" && board[0][1] === board[1][1] && board[1][1] === board[2][1]) return true;
-    if (board[0][2] !== "" && board[0][2] === board[1][2] && board[1][2] === board[2][2]) return true;
+    if (board[0][0] === symbol && board[1][0] === symbol && board[2][0] === symbol) return true;
+    if (board[0][1] === symbol && board[1][1] === symbol && board[2][1] === symbol) return true;
+    if (board[0][2] === symbol && board[1][2] === symbol && board[2][2] === symbol) return true;
     // diagnol check
-    if (board[0][0] !== "" && board[0][0] === board[1][1] && board[1][1] === board[2][2]) return true;
-    if (board[0][2] !== "" && board[0][2] === board[1][1] && board[1][1] === board[2][0]) return true;
+    if (board[0][0] === symbol && board[1][1] === symbol && board[2][2] === symbol) return true;
+    if (board[0][2] === symbol && board[1][1] === symbol && board[2][0] === symbol) return true;
 
     // if no exit condition, return false to resume
     return false;
@@ -91,4 +106,7 @@ const prompt = require("prompt-sync")();
   // run game (main)
   runInitialSetup();
   runGame(firstPlayer, secondPlayer, firstSymbol, secondSymbol);
+  (function endGame() {
+    console.log("GAME END");
+  })();
 })();
