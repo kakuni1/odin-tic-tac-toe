@@ -6,7 +6,7 @@ let tttBoard = {
 
   playerA: { name: "", symbol: "", firstMove: false },
   playerB: { name: "", symbol: "", firstMove: false },
-  gameData: { winnerName: "", gameTie: false },
+  gameData: { winner: "", tie: false },
 };
 
 const prompt = require("prompt-sync")();
@@ -32,17 +32,23 @@ const prompt = require("prompt-sync")();
     }
   })();
 
+  function getPlayer(symbol) {
+    return tttBoard.playerA.symbol === symbol ? tttBoard.playerA : tttBoard.playerB;
+  }
+
   function runGame() {
     // loop game until exit condition is met
     while (true) {
       oneMove("x");
       if (exitNow("x") === true) {
-        tttBoard.gameData.winnerName = tttBoard.playerA.name;
+        tttBoard.gameData.winner = getPlayer("x").name;
+        printConsole();
         break;
       }
       oneMove("o");
       if (exitNow("o") === true) {
-        tttBoard.gameData.winnerName = tttBoard.playerB.name;
+        tttBoard.gameData.winner = getPlayer("o").name;
+        printConsole();
         break;
       }
     }
@@ -69,7 +75,7 @@ const prompt = require("prompt-sync")();
 
     // board full
     if (board.some((i) => i.includes("")) === false) {
-      tttBoard.gameData.gameTie = true;
+      tttBoard.gameData.tie = true;
       return true;
     }
     // row check
@@ -105,7 +111,9 @@ const prompt = require("prompt-sync")();
 
   function printConsole() {
     console.table(tttBoard.boardGrid);
-    if (tttBoard.gameData.gameTie === true) console.log(`TIE!`);
+    if (tttBoard.gameData.tie === true) console.log(`TIE!`);
+    if (tttBoard.gameData.winner === tttBoard.playerA.name) console.log(`WINNER: ${tttBoard.playerA.name}`);
+    if (tttBoard.gameData.winner === tttBoard.playerB.name) console.log(`WINNER: ${tttBoard.playerB.name}`);
   }
 
   (function main() {
