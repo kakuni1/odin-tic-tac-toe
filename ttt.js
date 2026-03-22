@@ -4,8 +4,8 @@ let tttBoard = {
     .fill("")
     .map(() => Array(3).fill("")),
 
-  playerA: { name: "", symbol: "", firstMove: false },
-  playerB: { name: "", symbol: "", firstMove: false },
+  playerA: { name: "", symbol: "" },
+  playerB: { name: "", symbol: "" },
   gameData: { winner: "", tie: false },
 };
 
@@ -18,17 +18,19 @@ const prompt = require("prompt-sync")();
     // randomly apply symbol, "x" & "o"
     // x, goes first
     if (coinFlip > 0.5) {
-      tttBoard.playerA.firstMove = true;
       tttBoard.playerA.symbol = "x";
       tttBoard.playerB.symbol = "o";
       tttBoard.playerA.name = "Player 1";
       tttBoard.playerB.name = "Player 2";
+      console.log(`${tttBoard.playerA.name}: "${tttBoard.playerA.symbol}"`);
+      console.log(`${tttBoard.playerB.name}: "${tttBoard.playerB.symbol}"\n`);
     } else {
-      tttBoard.playerB.firstMove = true;
       tttBoard.playerB.symbol = "x";
       tttBoard.playerA.symbol = "o";
-      tttBoard.playerB.name = "Player 1";
-      tttBoard.playerA.name = "Player 2";
+      tttBoard.playerB.name = "Player 2";
+      tttBoard.playerA.name = "Player 1";
+      console.log(`${tttBoard.playerB.name}: ${tttBoard.playerB.symbol}`);
+      console.log(`${tttBoard.playerA.name}: "${tttBoard.playerA.symbol}"\n`);
     }
   })();
 
