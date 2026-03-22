@@ -4,8 +4,9 @@ let tttBoard = {
     .fill("")
     .map(() => Array(3).fill("")),
 
-  playerA: { name: "", symbol: "" },
-  playerB: { name: "", symbol: "" },
+  playerA: { name: "", symbol: "", firstMove: false },
+  playerB: { name: "", symbol: "", firstMove: false },
+  gameData: { winnerName: "", gameTie: false },
 };
 
 const prompt = require("prompt-sync")();
@@ -17,11 +18,13 @@ const prompt = require("prompt-sync")();
     // randomly apply symbol, "x" & "o"
     // x, goes first
     if (coinFlip > 0.5) {
+      tttBoard.playerA.firstMove = true;
       tttBoard.playerA.symbol = "x";
       tttBoard.playerB.symbol = "o";
       tttBoard.playerA.name = "Player 1";
       tttBoard.playerB.name = "Player 2";
     } else {
+      tttBoard.playerB.firstMove = true;
       tttBoard.playerB.symbol = "x";
       tttBoard.playerA.symbol = "o";
       tttBoard.playerB.name = "Player 1";
@@ -29,10 +32,20 @@ const prompt = require("prompt-sync")();
     }
   })();
 
-  function promptUser() {
-    const inputRow = prompt(`${tttBoard.playerA.name} (${tttBoard.playerA.symbol}), choose array slot (row): `);
-    const inputCol = prompt(`${tttBoard.playerB.name} (${tttBoard.playerB.symbol}), choose array slot (col): `);
-    return { row: parseInt(inputRow) - 1, col: parseInt(inputCol) - 1 };
+  function runGame() {
+    // loop game until exit condition is met
+    while (true) {
+      oneMove("x");
+      if (exitNow("x") === true) {
+        tttBoard.gameData.winnerName = tttBoard.playerA.name;
+        break;
+      }
+      oneMove("o");
+      if (exitNow("o") === true) {
+        tttBoard.gameData.winnerName = tttBoard.playerB.name;
+        break;
+      }
+    }
   }
 
   function oneMove(symbol) {
@@ -40,37 +53,12 @@ const prompt = require("prompt-sync")();
     // take (1) player's input
 
     while (!validMove) {
-      const { row, col } = promptUser();
+      const { row, col } = promptUser(symbol);
       if (tttBoard.boardGrid[row][col] === "") {
         validMove = true;
         tttBoard.boardGrid[row][col] = symbol;
+        printConsole();
       }
-    }
-  }
-
-  function runGame() {
-    // loop game until exit condition is met
-    while (true) {
-      if (exitNow("x") === true) {
-        console.log(`WINNER: ${tttBoard.playerA.name}`);
-        break;
-      }
-      if (exitNow("o") === true) {
-        console.log(`WINNER: ${tttBoard.playerB.name}`);
-        break;
-      }
-      oneMove("x");
-      printConsole();
-      if (exitNow("x") === true) {
-        console.log(`WINNER: ${tttBoard.playerA.name}`);
-        break;
-      }
-      if (exitNow("o") === true) {
-        console.log(`WINNER: ${tttBoard.playerB.name}`);
-        break;
-      }
-      oneMove("o");
-      printConsole();
     }
   }
 
@@ -81,7 +69,7 @@ const prompt = require("prompt-sync")();
 
     // board full
     if (board.some((i) => i.includes("")) === false) {
-      console.log("TIE");
+      tttBoard.gameData.gameTie = true;
       return true;
     }
     // row check
@@ -92,7 +80,7 @@ const prompt = require("prompt-sync")();
     if (board[0][0] === symbol && board[1][0] === symbol && board[2][0] === symbol) return true;
     if (board[0][1] === symbol && board[1][1] === symbol && board[2][1] === symbol) return true;
     if (board[0][2] === symbol && board[1][2] === symbol && board[2][2] === symbol) return true;
-    // diagnol check
+    // diagonal check
     if (board[0][0] === symbol && board[1][1] === symbol && board[2][2] === symbol) return true;
     if (board[0][2] === symbol && board[1][1] === symbol && board[2][0] === symbol) return true;
 
@@ -100,8 +88,15 @@ const prompt = require("prompt-sync")();
     return false;
   }
 
+  function promptUser(symbol) {
+    const inputName = tttBoard.playerA.symbol === symbol ? tttBoard.playerA.name : tttBoard.playerB.name;
+    const inputRow = prompt(`${inputName} (${symbol}), choose row (0-2): `);
+    const inputCol = prompt(`${inputName} (${symbol}), choose col (0-2): `);
+    return { row: parseInt(inputRow), col: parseInt(inputCol) };
+  }
+
   function nameChange() {
-    let whichName = prompt(`Select name -> [1] ${tttBoard.playerA.name}, [2] ${tttBoard.playerA.name}:  `);
+    let whichName = prompt(`Select name -> [1] ${tttBoard.playerA.name}, [2] ${tttBoard.playerB.name}:  `);
     whichName = parseInt(whichName);
     const inputName = prompt(`Enter name: `);
     if (whichName === 1) tttBoard.playerA.name = inputName;
@@ -109,17 +104,11 @@ const prompt = require("prompt-sync")();
   }
 
   function printConsole() {
-    console.table(tttBoard.playerA);
-    console.table(tttBoard.playerB);
-    console.table(tttBoard.firstMove);
     console.table(tttBoard.boardGrid);
+    if (tttBoard.gameData.gameTie === true) console.log(`TIE!`);
   }
 
-  // run game (main)
-  // runInitialSetup();
-  runGame();
-  printConsole();
-  (function endGame() {
-    console.log("GAME END");
+  (function main() {
+    runGame();
   })();
 })();
