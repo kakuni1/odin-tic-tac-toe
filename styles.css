@@ -1,3 +1,74 @@
+/* START CSS RESET */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+* {
+    margin: 0;
+}
+
 body {
-    background-color: grey;
+    line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+    display: block;
+    max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+    font: inherit;
+}
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    overflow-wrap: break-word;
+}
+
+/* END CSS RESET */
+
+body {
+    background-color: #1f1f28;
+}
+
+#main-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+#ttt-grid {
+    display: grid;
+    grid-template-rows: repeat(3, 125px);
+    grid-template-columns: repeat(3, 125px);
+    gap: 2rem;
+}
+
+.card {
+    background-color: #e7e4d0;
+    border: solid #c4746e 5px;
+}
+
+.ttt-text {
+    display: flex;
+    color: #495b56;
+    justify-content: center;
+    font-size: 5rem;
 }
