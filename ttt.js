@@ -29,7 +29,7 @@ const prompt = require("prompt-sync")();
       tttBoard.playerA.symbol = "o";
       tttBoard.playerB.name = "Player 2";
       tttBoard.playerA.name = "Player 1";
-      console.log(`${tttBoard.playerB.name}: ${tttBoard.playerB.symbol}`);
+      console.log(`${tttBoard.playerB.name}: "${tttBoard.playerB.symbol}"`);
       console.log(`${tttBoard.playerA.name}: "${tttBoard.playerA.symbol}"\n`);
     }
   })();
