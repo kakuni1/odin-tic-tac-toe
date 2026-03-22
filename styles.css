@@ -81,12 +81,12 @@ h1 {
 
 .card {
     background-color: #e7e4d0;
-    border: solid #c4746e 4px;
+    border: solid #c4746e 0.33rem;
 }
 
 .card:hover {
     background-color: #f6f5ee;
-    border: solid #d0908b 4px;
+    border: solid #d0908b 0.25rem;
     cursor: pointer;
 }
 
