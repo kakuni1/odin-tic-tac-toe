@@ -63,13 +63,23 @@ body {
 
 .card {
     background-color: #e7e4d0;
-    border: solid #c4746e 5px;
+    border: solid #c4746e 4px;
+}
+
+.card:hover {
+    background-color: #f6f5ee;
+    border: solid #d0908b 4px;
+    box-shadow:
+        rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset,
+        rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    cursor: pointer;
 }
 
 .ttt-text {
     display: flex;
     color: #495b56;
     justify-content: center;
+    transform: translate(0%, -7.5%);
     font-family:
         "WDXL Lubrifont JP N",
         system-ui,
