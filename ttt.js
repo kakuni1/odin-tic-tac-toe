@@ -9,8 +9,6 @@ let tttBoard = {
   gameData: { winner: "", tie: false },
 };
 
-const prompt = require("prompt-sync")();
-
 (function runLogic() {
   (function runInitialSetup() {
     const coinFlip = Math.random();
@@ -94,21 +92,6 @@ const prompt = require("prompt-sync")();
 
     // if no exit condition, return false to resume
     return false;
-  }
-
-  function promptUser(symbol) {
-    const inputName = tttBoard.playerA.symbol === symbol ? tttBoard.playerA.name : tttBoard.playerB.name;
-    const inputRow = prompt(`${inputName} (${symbol}), choose row (0-2): `);
-    const inputCol = prompt(`${inputName} (${symbol}), choose col (0-2): `);
-    return { row: parseInt(inputRow), col: parseInt(inputCol) };
-  }
-
-  function nameChange() {
-    let whichName = prompt(`Select name -> [1] ${tttBoard.playerA.name}, [2] ${tttBoard.playerB.name}:  `);
-    whichName = parseInt(whichName);
-    const inputName = prompt(`Enter name: `);
-    if (whichName === 1) tttBoard.playerA.name = inputName;
-    if (whichName === 2) tttBoard.playerB.name = inputName;
   }
 
   function printConsole() {
