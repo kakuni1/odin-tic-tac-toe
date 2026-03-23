@@ -94,13 +94,6 @@ let tttBoard = {
     return false;
   }
 
-  function printConsole() {
-    console.table(tttBoard.boardGrid);
-    if (tttBoard.gameData.tie === true) console.log(`TIE!`);
-    if (tttBoard.gameData.winner === tttBoard.playerA.name) console.log(`WINNER: ${tttBoard.playerA.name}`);
-    if (tttBoard.gameData.winner === tttBoard.playerB.name) console.log(`WINNER: ${tttBoard.playerB.name}`);
-  }
-
   (function main() {
     runGame();
   })();
