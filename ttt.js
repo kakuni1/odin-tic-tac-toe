@@ -95,6 +95,8 @@ let tttBoard = {
   }
 
   (function main() {
+    document.getElementById("player-status").textContent =
+      `${tttBoard.playerA.name}:  ${tttBoard.playerA.symbol}\n${tttBoard.playerB.name}:  ${tttBoard.playerB.symbol}`;
     runGame();
   })();
 })();
