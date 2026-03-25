@@ -66,11 +66,11 @@
       if (gameOver) {
         endGame();
         if (tttBoard.gameData.winner) {
-          tttBoard.gameData.display = "winner: " + tttBoard.gameData.winner;
+          tttBoard.gameData.display = "Winner: " + tttBoard.gameData.winner;
           tttBoard.gameData.currentSymbol = "";
           printPlayerInfo();
         } else {
-          tttBoard.gameData.display = "tie";
+          tttBoard.gameData.display = "Tie";
           tttBoard.gameData.currentSymbol = "";
           printPlayerInfo();
         }
