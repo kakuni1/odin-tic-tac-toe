@@ -56,6 +56,23 @@ body {
     min-height: 100vh;
 }
 
+#open-modal {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#player-button {
+    position: absolute;
+    left: 0%;
+    top: 0%;
+}
+
+#reset {
+    margin-top: 1rem;
+}
+
 #player-status {
     color: #d7d2b2;
     white-space: pre;

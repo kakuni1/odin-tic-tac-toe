@@ -15,6 +15,13 @@
     </head>
     <body>
         <div id="main-container">
+            <button id="player-button">Player</button>
+            <dialog id="open-modal" closedby="any">
+                <input type="text" id="playerA-name" placeholder="Player 1" />
+                <input type="text" id="playerB-name" placeholder="Player 2" />
+                <button id="close-modal">cancel</button>
+                <input type="submit" id="submit" />
+            </dialog>
             <h2 id="player-status"></h2>
             <br />
             <div id="ttt-grid">
@@ -28,6 +35,7 @@
                 <div class="card"><p class="display"></p></div>
                 <div class="card"><p class="display"></p></div>
             </div>
+            <button id="reset">Reset</button>
         </div>
     </body>
 </html>

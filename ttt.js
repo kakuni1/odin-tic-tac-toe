@@ -5,8 +5,8 @@
             .fill("")
             .map(() => Array(3).fill("")),
 
-        playerA: { name: "", symbol: "" },
-        playerB: { name: "", symbol: "" },
+        playerA: { name: "Player 1", symbol: "" },
+        playerB: { name: "Player 2", symbol: "" },
         gameData: {
             row: 0,
             col: 0,
@@ -18,7 +18,7 @@
         },
     };
 
-    (function runInitialSetup() {
+    function runInitialSetup() {
         const coinFlip = Math.random();
 
         // randomly apply symbol, "x" & "o"
@@ -26,15 +26,11 @@
         if (coinFlip > 0.5) {
             tttBoard.playerA.symbol = "x";
             tttBoard.playerB.symbol = "o";
-            tttBoard.playerA.name = "Player 1";
-            tttBoard.playerB.name = "Player 2";
         } else {
             tttBoard.playerB.symbol = "x";
             tttBoard.playerA.symbol = "o";
-            tttBoard.playerB.name = "Player 2";
-            tttBoard.playerA.name = "Player 1";
         }
-    })();
+    }
 
     function readyGame() {
         printPlayerInfo();
@@ -122,6 +118,61 @@
         return false;
     }
 
+    function openModal() {
+        document.getElementById("open-modal").showModal();
+    }
+
+    function setupModal() {
+        const dialog = document.getElementById("open-modal");
+        const openButton = document.getElementById("player-button");
+        const closeButton = document.getElementById("close-modal");
+        const submitButton = document.getElementById("submit");
+
+        openButton.addEventListener("click", () => {
+            dialog.showModal();
+        });
+
+        closeButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            dialog.close();
+        });
+
+        submitButton.addEventListener("click", (event) => {
+            event.preventDefault();
+            const playerAName = document.getElementById("playerA-name").value.trim() || "Player 1";
+            const playerBName = document.getElementById("playerB-name").value.trim() || "Player 2";
+            tttBoard.playerA.name = playerAName;
+            tttBoard.playerB.name = playerBName;
+            printPlayerInfo();
+            dialog.close();
+        });
+    }
+
+    function setupReset() {
+        const resetButton = document.getElementById("reset");
+
+        // reset on mouse click
+        resetButton.addEventListener("click", () => {
+            // clear array
+            tttBoard.boardGrid = tttBoard.boardGrid.map((row) => row.map(() => ""));
+            tttBoard.gameData.display = "Next: ";
+            tttBoard.gameData.winner = "";
+            tttBoard.gameData.tie = false;
+            tttBoard.gameData.row = 0;
+            tttBoard.gameData.col = 0;
+            tttBoard.gameData.currentIndex = "";
+            tttBoard.gameData.currentSymbol = "x";
+            runInitialSetup();
+            document.querySelectorAll(".display").forEach((display) => {
+                display.textContent = "";
+            });
+            document.querySelectorAll(".card").forEach((card) => {
+                card.style.pointerEvents = "";
+            });
+            printPlayerInfo();
+        });
+    }
+
     function switchSymbol() {
         if (tttBoard.gameData.currentSymbol === "x") {
             tttBoard.gameData.currentSymbol = "o";
@@ -134,7 +185,10 @@
         document.getElementById("player-status").textContent =
             `${tttBoard.playerA.name}: ${tttBoard.playerA.symbol}\n${tttBoard.playerB.name}: ${tttBoard.playerB.symbol}
       \n${tttBoard.gameData.display}${tttBoard.gameData.currentSymbol}`;
+        console.table(tttBoard.boardGrid);
         console.table(tttBoard.gameData);
+        console.table(tttBoard.playerA);
+        console.table(tttBoard.playerB);
     }
 
     function getPlayer(symbol) {
@@ -143,11 +197,16 @@
 
     function endGame() {
         document.querySelectorAll(".card").forEach((card) => {
+            // game over, disable click
             card.style.pointerEvents = "none";
         });
     }
 
     (function main() {
+        runInitialSetup();
         readyGame();
+        setupModal();
+        setupReset();
+        openModal();
     })();
 })();
